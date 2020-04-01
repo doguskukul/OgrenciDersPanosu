@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DersDb">
+          <Key>
+            <PropertyRef Name="DersId" />
+          </Key>
+          <Property Name="DersId" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="DersAdı" Type="nchar" MaxLength="30" />
+          <Property Name="OgretmenId" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="NotDb">
+          <Key>
+            <PropertyRef Name="NotId" />
+          </Key>
+          <Property Name="DersId" Type="nchar" MaxLength="30" />
+          <Property Name="OgrenciNo" Type="nchar" MaxLength="30" />
+          <Property Name="Sinav1" Type="int" />
+          <Property Name="Sinav2" Type="int" />
+          <Property Name="Sinav3" Type="int" />
+          <Property Name="Sozlu1" Type="int" />
+          <Property Name="Sozlu2" Type="int" />
+          <Property Name="Sozlu3" Type="int" />
+          <Property Name="NotId" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="NotOrtalamasi" Type="int" />
+        </EntityType>
+        <EntityType Name="OgrenciDb">
+          <Key>
+            <PropertyRef Name="No" />
+          </Key>
+          <Property Name="No" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Ad" Type="nchar" MaxLength="30" />
+          <Property Name="Soyad" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="OgretmenDb">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Ad" Type="nchar" MaxLength="30" />
+          <Property Name="Soyad" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK_DersDb_OgretmenDb">
+          <End Role="OgretmenDb" Type="Self.OgretmenDb" Multiplicity="0..1" />
+          <End Role="DersDb" Type="Self.DersDb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OgretmenDb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DersDb">
+              <PropertyRef Name="OgretmenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotDb_DersDb">
+          <End Role="DersDb" Type="Self.DersDb" Multiplicity="0..1" />
+          <End Role="NotDb" Type="Self.NotDb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DersDb">
+              <PropertyRef Name="DersId" />
+            </Principal>
+            <Dependent Role="NotDb">
+              <PropertyRef Name="DersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotDb_OgrenciDb">
+          <End Role="OgrenciDb" Type="Self.OgrenciDb" Multiplicity="0..1" />
+          <End Role="NotDb" Type="Self.NotDb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OgrenciDb">
+              <PropertyRef Name="No" />
+            </Principal>
+            <Dependent Role="NotDb">
+              <PropertyRef Name="OgrenciNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="DersDb" EntityType="Self.DersDb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotDb" EntityType="Self.NotDb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OgrenciDb" EntityType="Self.OgrenciDb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OgretmenDb" EntityType="Self.OgretmenDb" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DersDb_OgretmenDb" Association="Self.FK_DersDb_OgretmenDb">
+            <End Role="OgretmenDb" EntitySet="OgretmenDb" />
+            <End Role="DersDb" EntitySet="DersDb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotDb_DersDb" Association="Self.FK_NotDb_DersDb">
+            <End Role="DersDb" EntitySet="DersDb" />
+            <End Role="NotDb" EntitySet="NotDb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotDb_OgrenciDb" Association="Self.FK_NotDb_OgrenciDb">
+            <End Role="OgrenciDb" EntitySet="OgrenciDb" />
+            <End Role="NotDb" EntitySet="NotDb" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DersDb">
+          <Key>
+            <PropertyRef Name="DersId" />
+          </Key>
+          <Property Name="DersId" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="DersAdı" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="OgretmenId" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="OgretmenDb" Relationship="Self.FK_DersDb_OgretmenDb" FromRole="DersDb" ToRole="OgretmenDb" />
+          <NavigationProperty Name="NotDbs" Relationship="Self.FK_NotDb_DersDb" FromRole="DersDb" ToRole="NotDb" />
+        </EntityType>
+        <EntityType Name="NotDb">
+          <Key>
+            <PropertyRef Name="NotId" />
+          </Key>
+          <Property Name="DersId" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="OgrenciNo" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Sinav1" Type="Int32" />
+          <Property Name="Sinav2" Type="Int32" />
+          <Property Name="Sinav3" Type="Int32" />
+          <Property Name="Sozlu1" Type="Int32" />
+          <Property Name="Sozlu2" Type="Int32" />
+          <Property Name="Sozlu3" Type="Int32" />
+          <Property Name="NotId" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="NotOrtalamasi" Type="Int32" />
+          <NavigationProperty Name="DersDb" Relationship="Self.FK_NotDb_DersDb" FromRole="NotDb" ToRole="DersDb" />
+          <NavigationProperty Name="OgrenciDb" Relationship="Self.FK_NotDb_OgrenciDb" FromRole="NotDb" ToRole="OgrenciDb" />
+        </EntityType>
+        <EntityType Name="OgrenciDb">
+          <Key>
+            <PropertyRef Name="No" />
+          </Key>
+          <Property Name="No" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Ad" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="NotDbs" Relationship="Self.FK_NotDb_OgrenciDb" FromRole="OgrenciDb" ToRole="NotDb" />
+        </EntityType>
+        <EntityType Name="OgretmenDb">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Ad" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="DersDbs" Relationship="Self.FK_DersDb_OgretmenDb" FromRole="OgretmenDb" ToRole="DersDb" />
+        </EntityType>
+        <Association Name="FK_DersDb_OgretmenDb">
+          <End Role="OgretmenDb" Type="Self.OgretmenDb" Multiplicity="0..1" />
+          <End Role="DersDb" Type="Self.DersDb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OgretmenDb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DersDb">
+              <PropertyRef Name="OgretmenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotDb_DersDb">
+          <End Role="DersDb" Type="Self.DersDb" Multiplicity="0..1" />
+          <End Role="NotDb" Type="Self.NotDb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DersDb">
+              <PropertyRef Name="DersId" />
+            </Principal>
+            <Dependent Role="NotDb">
+              <PropertyRef Name="DersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotDb_OgrenciDb">
+          <End Role="OgrenciDb" Type="Self.OgrenciDb" Multiplicity="0..1" />
+          <End Role="NotDb" Type="Self.NotDb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OgrenciDb">
+              <PropertyRef Name="No" />
+            </Principal>
+            <Dependent Role="NotDb">
+              <PropertyRef Name="OgrenciNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DersDbs" EntityType="Self.DersDb" />
+          <EntitySet Name="NotDbs" EntityType="Self.NotDb" />
+          <EntitySet Name="OgrenciDbs" EntityType="Self.OgrenciDb" />
+          <EntitySet Name="OgretmenDbs" EntityType="Self.OgretmenDb" />
+          <AssociationSet Name="FK_DersDb_OgretmenDb" Association="Self.FK_DersDb_OgretmenDb">
+            <End Role="OgretmenDb" EntitySet="OgretmenDbs" />
+            <End Role="DersDb" EntitySet="DersDbs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotDb_DersDb" Association="Self.FK_NotDb_DersDb">
+            <End Role="DersDb" EntitySet="DersDbs" />
+            <End Role="NotDb" EntitySet="NotDbs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotDb_OgrenciDb" Association="Self.FK_NotDb_OgrenciDb">
+            <End Role="OgrenciDb" EntitySet="OgrenciDbs" />
+            <End Role="NotDb" EntitySet="NotDbs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <EntitySetMapping Name="DersDbs">
+            <EntityTypeMapping TypeName="DatabaseModel.DersDb">
+              <MappingFragment StoreEntitySet="DersDb">
+                <ScalarProperty Name="DersId" ColumnName="DersId" />
+                <ScalarProperty Name="DersAdı" ColumnName="DersAdı" />
+                <ScalarProperty Name="OgretmenId" ColumnName="OgretmenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotDbs">
+            <EntityTypeMapping TypeName="DatabaseModel.NotDb">
+              <MappingFragment StoreEntitySet="NotDb">
+                <ScalarProperty Name="DersId" ColumnName="DersId" />
+                <ScalarProperty Name="OgrenciNo" ColumnName="OgrenciNo" />
+                <ScalarProperty Name="Sinav1" ColumnName="Sinav1" />
+                <ScalarProperty Name="Sinav2" ColumnName="Sinav2" />
+                <ScalarProperty Name="Sinav3" ColumnName="Sinav3" />
+                <ScalarProperty Name="Sozlu1" ColumnName="Sozlu1" />
+                <ScalarProperty Name="Sozlu2" ColumnName="Sozlu2" />
+                <ScalarProperty Name="Sozlu3" ColumnName="Sozlu3" />
+                <ScalarProperty Name="NotId" ColumnName="NotId" />
+                <ScalarProperty Name="NotOrtalamasi" ColumnName="NotOrtalamasi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OgrenciDbs">
+            <EntityTypeMapping TypeName="DatabaseModel.OgrenciDb">
+              <MappingFragment StoreEntitySet="OgrenciDb">
+                <ScalarProperty Name="No" ColumnName="No" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OgretmenDbs">
+            <EntityTypeMapping TypeName="DatabaseModel.OgretmenDb">
+              <MappingFragment StoreEntitySet="OgretmenDb">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
