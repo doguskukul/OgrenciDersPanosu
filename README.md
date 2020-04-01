@@ -1,0 +1,2 @@
+# OgrenciDersPanosu
+OgrenciOgretmenDersPanosuSistemi
