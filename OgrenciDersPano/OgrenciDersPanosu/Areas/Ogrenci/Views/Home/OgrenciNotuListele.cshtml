@@ -1,0 +1,34 @@
+﻿@model OgrenciDersPanosu.OgrenciDb
+@using OgrenciDersPanosu.Models
+@{
+    ViewBag.Title = "OgrenciNotuListele";
+}
+<link href="~/Content/OgrenciNotuListele.css" rel="stylesheet" type="text/css" />
+<div class="tabloDiv">
+    <table class="table table-striped">
+        <tr>
+            <th>Ders</th>
+            <th>Sınav1</th>
+            <th>Sınav2</th>
+            <th>Sınav3</th>
+            <th>Sözlü1</th>
+            <th>Sözlü2</th>
+            <th>Sözlü3</th>
+            <th>NotOrtalaması</th>
+        </tr>
+        @foreach (NotDb aNot in Model.NotDbs)
+        {
+            <tr>
+                <th>@aNot.DersDb.DersAdı</th>
+                <th>@aNot.Sinav1</th>
+                <th>@aNot.Sinav2</th>
+                <th>@aNot.Sinav3</th>
+                <th>@aNot.Sozlu1</th>
+                <th>@aNot.Sozlu2</th>
+                <th>@aNot.Sozlu3</th>
+                <!-- <th>Html.NotHesapla(aNot)</th>  -->
+                <!--Yukarıdaki yorumu kaldırdığında htmlin başına at işareti koy-->
+            </tr>
+        }
+    </table>
+</div>

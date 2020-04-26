@@ -1,0 +1,14 @@
+﻿@model OgrenciDersPanosu.OgrenciDb
+@{
+    ViewBag.Title = "OgrenciBilgisi";
+}
+<link href="~/Content/Mudur.css" rel="stylesheet" type="text/css" />
+<div class="card">
+    <img src="~/Content/Images/classmates.png" alt="Avatar" style="width:100%">
+    <div class="container">
+        <p><b>İsim: </b>@Model.Ad</p>
+        <p><b>Soyisim: </b>@Model.Soyad</p>
+        <p><b>Kullanıcı Adı: </b>@Model.No</p>
+    </div>
+</div>
+
