@@ -1,0 +1,30 @@
+﻿@model OgrenciDersPanosu.OgretmenDb
+@{
+    ViewBag.Title = "DersListele";
+}
+<link href="~/Content/Mudur.css" rel="stylesheet" type="text/css" />
+@{
+    <div class="card">
+        <img src="~/Content/Images/teacher.png" alt="Avatar" style="width:100%">
+        <div class="container">
+            <h4><b>@Model.Id</b></h4>
+            <p>@Model.Ad</p>
+            <p>@Model.Soyad</p>
+            <div>
+                <button class="btn btn-custom4 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Mevcut Dersler
+                </button>
+                <div class="dropdown-menu btn-custom4" aria-labelledby="dropdownMenuButton">
+                    @if (Model.DersDbs.Count() == 0)
+                    {
+                        <div>Mevcut ders yok</div>
+                    }
+                    @foreach (DersDb aDers in Model.DersDbs)
+                    {
+                        @Html.ActionLink(aDers.DersAdi, "OgrenciNotlariniGoruntule", new { dersId = aDers.DersId }, new { @class = "btn btn-custom4 btn-sm" })<br />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

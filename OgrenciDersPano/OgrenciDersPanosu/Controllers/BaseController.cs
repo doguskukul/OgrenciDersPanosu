@@ -13,10 +13,13 @@ namespace OgrenciDersPanosu.Controllers
     {
         public UserManager<ApplicationUser> userManager;
         public RoleManager<IdentityRole> roleManager;
+        public IdentityDataContext dbcontext;
+
         public BaseController()
         {
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDataContext()));
             roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new IdentityDataContext()));
+            dbcontext   = new IdentityDataContext();
         }
     }
 }
