@@ -1,7 +1,15 @@
-﻿
+﻿@model NotOtomasyonu.Identity.ApplicationUser
 @{
     ViewBag.Title = "Index";
+    
 }
 
-<h2>Index</h2>
-
+<link href="~/Content/Mudur.css" rel="stylesheet" type="text/css" />
+<div class="card">
+    <img src="~/Content/Images/boss.png" alt="Avatar" style="width:100%">
+    <div class="container">
+        <p><b>İsim:</b>@Model.Name</p>
+        <p><b>Soyisim:</b>@Model.Surname</p>
+        <p><b>Kullanıcı Adı:</b>@Model.UserName</p>
+    </div>
+</div>

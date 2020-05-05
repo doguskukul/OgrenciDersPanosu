@@ -13,6 +13,7 @@ using static OgrenciDersPanosu.Areas.Admin.Models.RoleModel;
 
 namespace OgrenciDersPanosu.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class HomeController : BaseController
     {
         // GET: Admin/Home
@@ -174,5 +175,116 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
 
 
         }
+
+
+
+        public ActionResult SelectRoleForRegister()
+        {
+            return View();
+        }
+
+        public ActionResult getUserList()
+        {
+            var roles = new List<ApplicationRole>();
+
+            var users = userManager.Users.ToList().Select(i => new UserWithRole
+            {
+                user = i,
+                Roles = userManager.GetRoles(i.Id)
+            });
+            return View(users);
+        }
+        public ActionResult DersAta()
+        {
+            return View();
+        }
+        public ActionResult OgretmeniAta(string ogretmenId, string dersId)
+        {
+            var updateDers = db.DersDbs.FirstOrDefault(i => i.DersId == dersId);
+            if (updateDers != null)
+            {
+                updateDers.OgretmenId = ogretmenId;
+                db.SaveChanges();
+            }
+            return Redirect("DersAta");
+        }
+        public ActionResult RegisterOgrenci()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterOgrenci(RegisterOgrenci model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser();
+                user.UserName = model.OgrenciNo;
+                user.Name = model.OgrenciIsim;
+                user.Surname = model.OgrenciSoyisim;
+                var result = userManager.Create(user, model.Sifre);
+
+                if (result.Succeeded)
+                {
+                    NotOtomasyonuEntities db = new NotOtomasyonuEntities();
+                    OgrenciDb aOgrenci = new OgrenciDb();
+                    aOgrenci.Ad = model.OgrenciIsim;
+                    aOgrenci.Soyad = model.OgrenciSoyisim;
+                    aOgrenci.No = model.OgrenciNo;
+                    db.OgrenciDbs.Add(aOgrenci);
+                    db.SaveChanges();
+                    userManager.AddToRole(user.Id, "Ogrenci");
+                    return RedirectToAction("Index", new { id = User.Identity.Name });
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
+            }
+            return View(model);
+        }
+        public ActionResult RegisterOgretmen()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterOgretmen(RegisterOgretmen model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser();
+                user.UserName = model.OgretmenId;
+                user.Name = model.OgretmenIsim;
+                user.Surname = model.OgretmenSoyisim;
+                var result = userManager.Create(user, model.Sifre);
+
+                if (result.Succeeded)
+                {
+                    NotOtomasyonuEntities db = new NotOtomasyonuEntities();
+                    OgretmenDb aOgretmen = new OgretmenDb();
+                    aOgretmen.Ad = model.OgretmenIsim;
+                    aOgretmen.Soyad = model.OgretmenSoyisim;
+                    aOgretmen.Id = model.OgretmenId;
+                    db.OgretmenDbs.Add(aOgretmen);
+                    db.SaveChanges();
+                    userManager.AddToRole(user.Id, "Ogretmen");
+                    return RedirectToAction("Index", new { id = User.Identity.Name });
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
+            }
+            return View(model);
+        }
     }
+
+}
 }

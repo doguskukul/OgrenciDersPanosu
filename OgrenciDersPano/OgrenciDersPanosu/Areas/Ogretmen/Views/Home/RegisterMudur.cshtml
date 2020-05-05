@@ -1,0 +1,33 @@
+﻿@model NotOtomasyonu.Models.RegisterMudur
+@{
+    /**/
+
+    ViewBag.Title = "Register";
+}
+<link href="~/Content/Register.css" rel="stylesheet" type="text/css" />
+<div class="form">
+    <h2>Kayıt Ol</h2>
+    <hr />
+    @Html.ValidationSummary()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(i => i.MudurId)
+            @Html.TextBoxFor(i => i.MudurId, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(i => i.MudurIsim)
+            @Html.TextBoxFor(i => i.MudurIsim, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(i => i.MudurSoyisim)
+            @Html.TextBoxFor(i => i.MudurSoyisim, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(i => i.Sifre)
+            @Html.TextBoxFor(i => i.Sifre, new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-custom3">Register</button>
+    }
+</div>

@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "DersAta";
+}
+<link href="~/Content/DersAta.css" rel="stylesheet" type="text/css" />
+<div class="tabloDiv">
+    <table class="table table-bordered">
+        <tr>
+            <th>Ders Numarası</th>
+            <th>Ders Adı</th>
+            <th>OğretmenID</th>
+        </tr>
+        @{
+            NotOtomasyonuEntities db = new NotOtomasyonuEntities();
+            var dersler = from ders in db.DersDbs select ders;
+            var ogretmenler = from ogretmen in db.OgretmenDbs select ogretmen;
+            foreach (DersDb aDers in dersler)
+            {
+                <tr>
+                    <td>@aDers.DersId</td>
+                    <td>@aDers.DersAdi</td>
+                    <td>
+                        <button class="btn btn-custom4 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @aDers.OgretmenDb.Ad @aDers.OgretmenDb.Soyad
+                         </button>
+                        <div class="dropdown-menu btn-custom4" aria-labelledby="dropdownMenuButton">
+                            @foreach (OgretmenDb ogretmen in ogretmenler)
+                            {
+                                @Html.ActionLink(@ogretmen.Ad + " " + @ogretmen.Soyad, "OgretmeniAta", new { dersId = aDers.DersId, ogretmenId = ogretmen.Id }, new { @class = "btn btn-custom4" })<br />
+                            }
+                        </div> 
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+ 

@@ -83,6 +83,10 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -197,6 +201,12 @@
     <Content Include="Areas\Ogrenci\Views\Home\OgrenciBilgisi.cshtml" />
     <Content Include="Areas\Ogrenci\Views\Home\OgrenciNotuListele.cshtml" />
     <Content Include="Areas\Ogrenci\Views\Home\DersSecimi.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\DersAta.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\getUserList.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\RegisterMudur.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\RegisterOgrenci.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\RegisterOgretmen.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\SelectRoleForRegister.cshtml" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />
