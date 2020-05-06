@@ -225,7 +225,7 @@ namespace OgrenciDersPanosu.Controllers
 
                 if (result.Succeeded)
                 {
-                    Ogrenci aOgrenci = new Ogrenci();
+                    OgrenciModel aOgrenci = new OgrenciModel();
                     aOgrenci.Ad = model.OgrenciIsim;
                     aOgrenci.Soyad = model.OgrenciSoyisim;
                     aOgrenci.OgrenciId = model.OgrenciNo;
@@ -263,14 +263,12 @@ namespace OgrenciDersPanosu.Controllers
 
                 if (result.Succeeded)
                 {
-                    /*DatabaseEntities db = new DatabaseEntities();
-                    OgretmenDb aOgretmen = new OgretmenDb();
+                    OgretmenModel aOgretmen = new OgretmenModel();
                     aOgretmen.Ad = model.OgretmenIsim;
                     aOgretmen.Soyad = model.OgretmenSoyisim;
-                    aOgretmen.Id = model.OgretmenId;
-                    db.OgretmenDbs.Add(aOgretmen);
-                    db.SaveChanges();
-                    */
+                    aOgretmen.OgretmenId = model.OgretmenId;
+                    dbcontext.Ogretmenler.Add(aOgretmen);
+                    dbcontext.SaveChanges();
                     userManager.AddToRole(user.Id, "Ogretmen");
                     return RedirectToAction("Index", new { id = User.Identity.Name });
                 }

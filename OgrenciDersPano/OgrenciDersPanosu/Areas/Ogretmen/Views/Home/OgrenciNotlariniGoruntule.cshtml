@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OgrenciDersPanosu.Nots>
+﻿@model IEnumerable<OgrenciDersPanosu.Models.Not>
 @using OgrenciDersPanosu.Models
 @{
     ViewBag.Title = "OgrenciNotlariniGoruntule";
@@ -28,12 +28,12 @@
             }
             else
             {
-                foreach (Nots aNot in Model)
+                foreach (OgrenciDersPanosu.Models.Not aNot in Model)
                 {
                     <tr>
-                        <th>@Html.ActionLink(aNot.OgrenciNo, "OgrenciNotlariniGuncelle", new { notId = aNot.NotId, dersId = aNot.DersId }, new { @class = "btn btn-custom4 btn-sm" })</th>
-                        <th>@aNot.OgrenciDb.Ad @aNot.OgrenciDb.Soyad</th>
-                        <th>@aNot.DersId</th>
+                        <th>@Html.ActionLink(aNot.Ogrenci.OgrenciId, "OgrenciNotlariniGuncelle", new { notId = aNot.NotId, dersId = aNot.Ders.DersId }, new { @class = "btn btn-custom4 btn-sm" })</th>
+                        <th>@aNot.Ogrenci.Ad @aNot.Ogrenci.Soyad</th>
+                        <th>@aNot.Ders.DersId</th>
                         <th>@aNot.Sinav1</th>
                         <th>@aNot.Sinav2</th>
                         <th>@aNot.Sinav3</th>

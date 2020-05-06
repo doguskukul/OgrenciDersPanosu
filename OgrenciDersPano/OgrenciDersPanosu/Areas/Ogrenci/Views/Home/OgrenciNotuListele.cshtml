@@ -1,4 +1,4 @@
-﻿@model OgrenciDersPanosu.OgrenciDb
+﻿@model OgrenciDersPanosu.Models.OgrenciModel
 @using OgrenciDersPanosu.Models
 @{
     ViewBag.Title = "OgrenciNotuListele";
@@ -16,10 +16,10 @@
             <th>Sözlü3</th>
             <th>NotOrtalaması</th>
         </tr>
-        @foreach (NotDb aNot in Model.NotDbs)
+        @foreach (Not aNot in Model.Notlar)
         {
             <tr>
-                <th>@aNot.DersDb.DersAdı</th>
+                <th>@aNot.Ders.DersAdi</th>
                 <th>@aNot.Sinav1</th>
                 <th>@aNot.Sinav2</th>
                 <th>@aNot.Sinav3</th>

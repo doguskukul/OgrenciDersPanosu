@@ -1,4 +1,4 @@
-﻿@model OgrenciDersPanosu.OgretmenDb
+﻿@model OgrenciDersPanosu.Models.OgretmenModel
 @{
     ViewBag.Title = "DersListele";
 }
@@ -7,7 +7,7 @@
     <div class="card">
         <img src="~/Content/Images/teacher.png" alt="Avatar" style="width:100%">
         <div class="container">
-            <h4><b>@Model.Id</b></h4>
+            <h4><b>@Model.OgretmenId</b></h4>
             <p>@Model.Ad</p>
             <p>@Model.Soyad</p>
             <div>
@@ -15,11 +15,11 @@
                     Mevcut Dersler
                 </button>
                 <div class="dropdown-menu btn-custom4" aria-labelledby="dropdownMenuButton">
-                    @if (Model.DersDbs.Count() == 0)
+                    @if (Model.Dersler.Count() == 0)
                     {
-                        <div>Mevcut ders yok</div>
+                    <div>Mevcut ders yok</div>
                     }
-                    @foreach (DersDb aDers in Model.DersDbs)
+                    @foreach (OgrenciDersPanosu.Models.Ders aDers in Model.Dersler)
                     {
                         @Html.ActionLink(aDers.DersAdi, "OgrenciNotlariniGoruntule", new { dersId = aDers.DersId }, new { @class = "btn btn-custom4 btn-sm" })<br />
                     }

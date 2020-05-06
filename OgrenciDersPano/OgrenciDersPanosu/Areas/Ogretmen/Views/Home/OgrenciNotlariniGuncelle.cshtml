@@ -1,4 +1,4 @@
-﻿@model OgrenciDersPanosu.Not
+﻿@model OgrenciDersPanosu.Models.Not
 @{
     /**/
 
@@ -6,7 +6,7 @@
 }
 <link href="~/Content/OgrenciNotlariniGuncelle.css" rel="stylesheet" type="text/css" />
 @Html.ValidationSummary()
-<div class="tabloDiv">
+<div  class="tabloDiv">
     @using (Html.BeginForm())
     {
         @Html.LabelFor(i => i.Sinav1)

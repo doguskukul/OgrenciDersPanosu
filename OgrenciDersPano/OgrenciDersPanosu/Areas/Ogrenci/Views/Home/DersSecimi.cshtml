@@ -1,10 +1,11 @@
-﻿@model IEnumerable<OgrenciDersPanosu.DersDb>
+﻿@model IEnumerable<OgrenciDersPanosu.Models.Ders>
+@using OgrenciDersPanosu.Models;
 @{
     ViewBag.Title = "DersSecimi";
 }
 <link href="~/Content/DersSecimi.css" rel="stylesheet" type="text/css" />
 @{
-    List<DersDb> mevcutOlmayanDersler = ViewBag.mevcutOlmayan;
+    List<Ders> mevcutOlmayanDersler = ViewBag.mevcutOlmayan;
 }
 <div class="tabloDiv">
     <table class="table table-striped">
@@ -13,11 +14,11 @@
             <th>DersAdı</th>
             <th></th>
         </tr>
-        @foreach (DersDb aDers in Model)
+        @foreach (Ders aDers in Model)
         {
             <tr>
                 <td>@aDers.DersId</td>
-                <td>@aDers.DersAdı</td>
+                <td>@aDers.DersAdi</td>
                 <td>
                     @if (mevcutOlmayanDersler.Find(i => i.DersId == aDers.DersId) != null)
                     {

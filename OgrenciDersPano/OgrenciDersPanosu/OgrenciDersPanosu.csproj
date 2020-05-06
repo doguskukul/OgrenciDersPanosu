@@ -202,11 +202,9 @@
     <Content Include="Areas\Ogrenci\Views\Home\OgrenciNotuListele.cshtml" />
     <Content Include="Areas\Ogrenci\Views\Home\DersSecimi.cshtml" />
     <Content Include="Areas\Admin\Views\Home\DersAta.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\getUserList.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\RegisterMudur.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\RegisterOgrenci.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\RegisterOgretmen.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\SelectRoleForRegister.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\OgrenciNotlariniGoruntule.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\DersListele.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\OgrenciNotlariniGuncelle.cshtml" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />
@@ -306,8 +304,9 @@
     <Compile Include="identity\ApplicationUser.cs" />
     <Compile Include="identity\IdentityDataContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Ogretmen.cs" />
-    <Compile Include="Models\Ogrenci.cs" />
+    <Compile Include="Models\DbExtensions.cs" />
+    <Compile Include="Models\OgretmenModel.cs" />
+    <Compile Include="Models\OgrenciModel.cs" />
     <Compile Include="Models\Not.cs" />
     <Compile Include="Models\Ders.cs" />
     <Compile Include="Models\UserModel.cs" />

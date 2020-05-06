@@ -28,9 +28,9 @@ namespace NotOtomasyonu.Areas.Ogretmen.Controllers
 
         public ActionResult OgrenciNotlariniGoruntule(string dersId)
         {
-            var notlar = (from not in dbcontext.Notlar where not.DersId == dersId select not).ToList();
-            var ogretmen = dbcontext.Ogretmenler.FirstOrDefault(i => i.Id == User.Identity.Name);
-            if (ogretmen.DersDbs.Count(i => i.DersId == dersId) == 0)
+            var notlar = (from not in dbcontext.Notlar where not.Ders.DersId == dersId select not).ToList();
+            var ogretmen = dbcontext.Ogretmenler.FirstOrDefault(i => i.OgretmenId == User.Identity.Name);
+            if (ogretmen.Dersler.Count(i => i.DersId == dersId) == 0)
             {
                 return RedirectToAction("DersListele", "Home");
             }
@@ -40,14 +40,13 @@ namespace NotOtomasyonu.Areas.Ogretmen.Controllers
         public ActionResult DersListele()
         {
             string id = User.Identity.Name;
-            Ogretmen aUser = dbcontext.Ogretmenler.FirstOrDefault(i => i.Id == User.Identity.Name);
+            OgretmenModel aUser = dbcontext.Ogretmenler.FirstOrDefault(i => i.OgretmenId == User.Identity.Name);
             return View(aUser);
         }
         public ActionResult OgrenciNotlariniGuncelle(string notId, string dersId)
         {
             Not not = dbcontext.Notlar.FirstOrDefault(i => i.NotId == notId);
-            // bu kısımdan emin deigilim not sınıfından not nesnesi olusturdum 
-            var ders = dbcontext.Dersler.FirstOrDefault(i => i.DersId == dersId);
+            Ders ders = dbcontext.Dersler.FirstOrDefault(i => i.DersId == dersId);
 
             if (ders.Notlar.Count(i => i.NotId == notId) == 0)
             {
@@ -57,9 +56,8 @@ namespace NotOtomasyonu.Areas.Ogretmen.Controllers
             return View(not);
         }
         [HttpPost]
-        public ActionResult OgrenciNotlariniGuncelle(Notlar model)
+        public ActionResult OgrenciNotlariniGuncelle(Not model)
         {
-            OgrenciDersPanosu dbcontext = new OgrenciDersPanosu();
             var notupdate = dbcontext.Notlar.FirstOrDefault(i => i.NotId == model.NotId);
             if (notupdate != null)
             {
@@ -71,7 +69,7 @@ namespace NotOtomasyonu.Areas.Ogretmen.Controllers
                 notupdate.Sozlu3 = model.Sozlu3;
                 dbcontext.SaveChanges();
             }
-            return RedirectToAction("OgrenciNotlariniGoruntule", new { dersId = notupdate.DersId });
+            return RedirectToAction("OgrenciNotlariniGoruntule", new { dersId = notupdate.Ders.DersId });
         }
     }
 }

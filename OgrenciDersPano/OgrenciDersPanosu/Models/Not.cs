@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -15,7 +16,7 @@ namespace OgrenciDersPanosu.Models
 
         //[ForeignKey("Ogrenci")]
 
-        public Ogrenci Ogrenci { get; set; }
+        public OgrenciModel Ogrenci { get; set; }
 
         public int Sinav1 { get; set; }
 
@@ -29,6 +30,7 @@ namespace OgrenciDersPanosu.Models
 
         public int Sozlu3 { get; set; }
 
+        [Key]
         public string NotId { get; set; }
 
     }

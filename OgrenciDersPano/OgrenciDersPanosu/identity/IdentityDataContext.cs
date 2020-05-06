@@ -18,9 +18,9 @@ namespace OgrenciDersPanosu.identity
 
         public DbSet<Not> Notlar { get; set; } 
 
-        public DbSet<Ogrenci> Ogrenciler { get; set; }
+        public DbSet<OgrenciModel> Ogrenciler { get; set; }
 
-        public DbSet<Ogretmen> Ogretmenler { get; set; }
+        public DbSet<OgretmenModel> Ogretmenler { get; set; }
 
         public DbSet<Ders> Dersler { get; set; }
 
