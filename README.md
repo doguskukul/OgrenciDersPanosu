@@ -20,9 +20,7 @@ Proje Çalıştırılırken:
 Uygulama kullanılırken:
 -İlk olarak veritabanına rol eklemeniz gerekiyor. "Ogretmen", "Ogrenci", "admin" rollerini oluşturun. (Küçük harf büyük harf önemli) ("https://localhost:44351/admin/home/create" adresinden rol oluşturabilir, "https://localhost:44351/admin/home/roles" adresinden oluşturduğunuz rolleri görebilirsiniz. Bu adreslere butonlar aracılığıyla ulaşılmayıp ilk aşamada sistemin doğru şekilde çalışması için oluşturulmuş modüller, sonradan rollere müdahale edilmesi gerektiğinde kullanılabilir.)
 
--Roller eklendikten sonra, "https://localhost:44351/home" adresindeki navbardan register butonuna basarak oluşturmak istediğiniz rolü seçip kullanıcı oluşturabilirsiniz. Admin kullanıcısı oluşturmak için "https://localhost:44351/admin/home/register" kullanmalısınız. (Projenin şuanki halinde url üzerinden bütün modüllere erişmek mümkün. Kodlarken işimizin kolaylaşması için. Aksi taktirde kontrol etmek istediğimiz modül için sürekli o modülün kullanıcı girişini yapmamız gerekecek. İşimiz bittiğinde sadece tek bir satırla o erişimi kaldırabileceğiz.)
-
--Sizin işlem yapacağınız yerler daha çok ogretmen ve ogrenci areası. 
+-Roller eklendikten sonra, "https://localhost:44351/home" adresindeki navbardan register butonuna basarak oluşturmak istediğiniz rolü seçip kullanıcı oluşturabilirsiniz. Admin kullanıcısı oluşturmak için "https://localhost:44351/admin/home/register" kullanmalısınız. (Rol oluşturma ve admin register işlemlerini gerçekleştirdikten sonra admin areasındaki authentication role satırını aktif hale getirin. Bu sayede url üzerinden farklı arealara erişilmesi engellenmiş olacak.)
 
 ![image3](https://i.imgyukle.com/2020/04/01/JlbjDc.png)
 ![image4](https://i.imgyukle.com/2020/04/01/JlbOxt.png)
