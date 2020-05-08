@@ -106,7 +106,7 @@ namespace OgrenciDersPanosu.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("OgrenciBilgisi", "Home");
             }
             string name = User.Identity.Name;
             ViewBag.returnUrl = returnUrl;
@@ -137,7 +137,7 @@ namespace OgrenciDersPanosu.Controllers
                         authManager.SignOut();
                         authManager.SignIn(authProperties, identity);
 
-                        return RedirectToAction("index", "home", new { area = "Ogrenci" });
+                        return RedirectToAction("OgrenciBilgisi", "home", new { area = "Ogrenci" });
                     }
                     else
                     {
@@ -158,6 +158,10 @@ namespace OgrenciDersPanosu.Controllers
         [HttpGet]
         public ActionResult LoginOgretmen(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("DersListele", "Home");
+            }
             string name = User.Identity.Name;
             ViewBag.returnUrl = returnUrl;
             return View();
@@ -168,10 +172,6 @@ namespace OgrenciDersPanosu.Controllers
         [AllowAnonymous]
         public ActionResult LoginOgretmen(LoginOgretmen model, string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             if (ModelState.IsValid)
             {
                 var user = userManager.Find(model.OgretmenId, model.Sifre);
@@ -190,7 +190,7 @@ namespace OgrenciDersPanosu.Controllers
                         };
                         authManager.SignOut();
                         authManager.SignIn(authProperties, identity);
-                        return RedirectToAction("index", "home", new { area = "Ogretmen" });
+                        return RedirectToAction("DersListele", "home", new { area = "Ogretmen" });
                     }
                     else
                     {

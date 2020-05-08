@@ -174,7 +174,6 @@
     <Content Include="Areas\Ogrenci\Views\Home\Index.cshtml" />
     <Content Include="Areas\Ogretmen\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Ogretmen\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Ogretmen\Views\Home\Index.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -201,10 +200,11 @@
     <Content Include="Areas\Ogrenci\Views\Home\OgrenciBilgisi.cshtml" />
     <Content Include="Areas\Ogrenci\Views\Home\OgrenciNotuListele.cshtml" />
     <Content Include="Areas\Ogrenci\Views\Home\DersSecimi.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\DersAta.cshtml" />
     <Content Include="Areas\Ogretmen\Views\Home\OgrenciNotlariniGoruntule.cshtml" />
     <Content Include="Areas\Ogretmen\Views\Home\DersListele.cshtml" />
     <Content Include="Areas\Ogretmen\Views\Home\OgrenciNotlariniGuncelle.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\DersOlustur.cshtml" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />

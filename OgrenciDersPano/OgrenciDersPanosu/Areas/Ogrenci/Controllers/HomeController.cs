@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
 {
@@ -38,44 +39,35 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
         public ActionResult OgrenciNotuListele()
         {
             var OgrenciNo = User.Identity.Name;
-            var ogrenci = dbcontext.Ogrenciler.FirstOrDefault(w => w.OgrenciId == OgrenciNo);
+            var ogrenci = dbcontext.Ogrenciler.Find(OgrenciNo);
             return View(ogrenci);
         }
 
         public ActionResult DersSecimi()
         {
             List<Ders> MevcutOlmayanDersler = new List<Ders>();
-            var dersler = from ders in dbcontext.Dersler select ders;
-            var mevcutDersler = from ders in dbcontext.Dersler
-                                join not in dbcontext.Notlar on ders.DersId
-                                equals not.Ders.DersId
-                                where not.Ogrenci.OgrenciId == User.Identity.Name
-                                select ders;
-            foreach (Ders aDers in dersler)
-            {
-                MevcutOlmayanDersler.Add(aDers);
+            var dersler = dbcontext.Dersler.ToList();
+            OgrenciModel ogrenci = dbcontext.Ogrenciler.Find(User.Identity.Name);
+            var notlar = dbcontext.Notlar.Where(i => i.Ogrenci.OgrenciId == ogrenci.OgrenciId);
+            IQueryable<Ders> mevcutDersler = Enumerable.Empty<Ders>().AsQueryable();
+            foreach (Not not in notlar) {
+                mevcutDersler = dbcontext.Dersler.Where(i => i.DersId == not.DersId);
             }
-            foreach (Ders aDers in dersler)
-            {
-                foreach (Ders aMevcutDers in mevcutDersler)
-                {
-                    if (aDers.DersId == aMevcutDers.DersId)
-                    {
-                        MevcutOlmayanDersler.Remove(aDers);
-                    }
-                }
-            }
-            ViewBag.mevcut = mevcutDersler;
-            ViewBag.mevcutOlmayan = MevcutOlmayanDersler;
+            
+            ViewBag.mevcut = mevcutDersler.ToList() ;
             return View(dersler);
         }
         public ActionResult SecilenDers(string dersId)
         {
             string ogrId = User.Identity.Name;
             string notId = string.Concat(dersId, ogrId);
+            OgrenciModel ogrenci = dbcontext.Ogrenciler.Find(ogrId);
+            Ders ders = dbcontext.Dersler.Find(dersId);
             Not not = new Not();
-            not.Ogrenci.OgrenciId = ogrId;
-            not.Ders.DersId = dersId;
+            not.Ogrenci = ogrenci;
+            not.OgrenciId = ogrenci.OgrenciId;
+            not.Ders = ders;
+            not.DersId = ders.DersId;
             not.NotId = notId;
             dbcontext.Notlar.Add(not);
             dbcontext.SaveChanges();
@@ -84,7 +76,8 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
         public ActionResult SilinecekDers(string dersId)
         {
             string ogrId = User.Identity.Name;
-            var not = (from aNot in dbcontext.Notlar join aDers in dbcontext.Dersler on aNot.Ders.DersId equals aDers.DersId join aOgrenci in dbcontext.Ogrenciler on aNot.Ogrenci.OgrenciId equals aOgrenci.OgrenciId where aNot.Ogrenci.OgrenciId == ogrId && aDers.DersId == dersId select aNot).FirstOrDefault();
+            Ders ders = dbcontext.Dersler.Find(dersId);
+            foreach (var not in dbcontext.Notlar.Where(o => o.DersId == dersId && o.OgrenciId == ogrId))
             dbcontext.Notlar.Remove(not);
             dbcontext.SaveChanges();
             return RedirectToAction("DersSecimi");

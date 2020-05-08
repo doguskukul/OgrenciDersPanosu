@@ -16,19 +16,22 @@
             <th>Sözlü3</th>
             <th>NotOrtalaması</th>
         </tr>
-        @foreach (Not aNot in Model.Notlar)
-        {
+        @if(Model.Notlar != null) {
+            foreach (Not aNot in Model.Notlar)
+            {
+                OgrenciDersPanosu.identity.IdentityDataContext context = new OgrenciDersPanosu.identity.IdentityDataContext();
+                Ders ders = context.Dersler.Find(aNot.DersId);
             <tr>
-                <th>@aNot.Ders.DersAdi</th>
+                <th>@ders.DersAdi</th>
                 <th>@aNot.Sinav1</th>
                 <th>@aNot.Sinav2</th>
                 <th>@aNot.Sinav3</th>
                 <th>@aNot.Sozlu1</th>
                 <th>@aNot.Sozlu2</th>
                 <th>@aNot.Sozlu3</th>
-                <!-- <th>Html.NotHesapla(aNot)</th>  -->
-                <!--Yukarıdaki yorumu kaldırdığında htmlin başına at işareti koy-->
+                <th>@Html.NotHesapla(aNot)</th>
             </tr>
+        }
         }
     </table>
 </div>

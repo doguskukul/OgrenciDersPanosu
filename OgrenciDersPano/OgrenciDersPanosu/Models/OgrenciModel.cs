@@ -15,7 +15,7 @@ namespace OgrenciDersPanosu.Models
 
         public string Soyad { get; set; }
 
-        public IEnumerable<Not> Notlar { get; set; }
+        public virtual ICollection<Not> Notlar { get; set; }
         
     }
 }

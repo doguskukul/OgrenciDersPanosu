@@ -28,11 +28,14 @@
             }
             else
             {
-                foreach (OgrenciDersPanosu.Models.Not aNot in Model)
-                {
+                if(Model.Count() != 0) {
+                    foreach (OgrenciDersPanosu.Models.Not aNot in Model)
+                    {
+                        OgrenciDersPanosu.identity.IdentityDataContext context = new OgrenciDersPanosu.identity.IdentityDataContext();
+                        OgrenciModel ogrenci = context.Ogrenciler.Find(aNot.OgrenciId);
                     <tr>
-                        <th>@Html.ActionLink(aNot.Ogrenci.OgrenciId, "OgrenciNotlariniGuncelle", new { notId = aNot.NotId, dersId = aNot.Ders.DersId }, new { @class = "btn btn-custom4 btn-sm" })</th>
-                        <th>@aNot.Ogrenci.Ad @aNot.Ogrenci.Soyad</th>
+                        <th>@Html.ActionLink(ogrenci.OgrenciId, "OgrenciNotlariniGuncelle", new { notId = aNot.NotId, dersId = aNot.Ders.DersId }, new { @class = "btn btn-custom4 btn-sm" })</th>
+                        <th>@ogrenci.Ad @ogrenci.Soyad</th>
                         <th>@aNot.Ders.DersId</th>
                         <th>@aNot.Sinav1</th>
                         <th>@aNot.Sinav2</th>
@@ -42,6 +45,7 @@
                         <th>@aNot.Sozlu3</th>
                         <th>@Html.NotHesapla(aNot)</th>
                     </tr>
+                }
                 }
             }
         </table>

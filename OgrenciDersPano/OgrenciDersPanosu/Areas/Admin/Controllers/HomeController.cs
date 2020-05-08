@@ -19,7 +19,9 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
-            return View();
+            var id = HttpContext.User.Identity.Name;
+            var user = userManager.FindByName(id);
+            return View(user);
         }
         public ActionResult Roles()
         {
@@ -40,7 +42,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
                 var result = roleManager.Create(new IdentityRole(name));
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Roles");
                 }
                 else
                 {
@@ -155,7 +157,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
                 if (result.Succeeded)
                 {
                     userManager.AddToRole(user.Id, "Admin");
-                    return RedirectToAction("Index", new { id = User.Identity.Name });
+                    return RedirectToAction("RegisterAdmin", new { id = User.Identity.Name });
                 }
                 else
                 {
@@ -193,20 +195,6 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
                 Roles = userManager.GetRoles(i.Id)
             });
             return View(users);
-        }
-        public ActionResult DersAta()
-        {
-            return View();
-        }
-        public ActionResult OgretmeniAta(string ogretmenId, string dersId)
-        {
-            var updateDers = dbcontext.Dersler.FirstOrDefault(i => i.DersId == dersId);
-            if (updateDers != null)
-            {
-                updateDers.Ogretmen.OgretmenId = ogretmenId;
-                dbcontext.SaveChanges();
-            }
-            return Redirect("DersAta");
         }
     }
 }

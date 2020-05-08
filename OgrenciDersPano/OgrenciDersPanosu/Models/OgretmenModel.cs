@@ -15,7 +15,7 @@ namespace OgrenciDersPanosu.Models
         
         public string Soyad { get; set; }
         
-        public IEnumerable<Ders> Dersler { get; set; }
+        public virtual ICollection<Ders> Dersler { get; set; }
 
     }
 }

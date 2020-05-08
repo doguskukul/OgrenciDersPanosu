@@ -11,12 +11,16 @@ namespace OgrenciDersPanosu.Models
     {
 
         //[ForeignKey("Ders")]
-       
+
+        public string DersId { get; set; }
         public Ders Ders { get; set; }
+        
 
         //[ForeignKey("Ogrenci")]
 
+        public string OgrenciId { get; set; }
         public OgrenciModel Ogrenci { get; set; }
+        
 
         public int Sinav1 { get; set; }
 

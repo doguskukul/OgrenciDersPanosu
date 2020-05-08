@@ -18,8 +18,8 @@ namespace OgrenciDersPanosu.Models
 
 
         public OgretmenModel Ogretmen { get; set; }
-        public IEnumerable<Not> Notlar {get;set;}
-
-
+        public string OgretmenId { get; set; }
+        public virtual ICollection<Not> Notlar {get;set;}
+       
     }
 }

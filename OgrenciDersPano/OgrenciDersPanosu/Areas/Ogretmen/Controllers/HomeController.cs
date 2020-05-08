@@ -9,7 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace NotOtomasyonu.Areas.Ogretmen.Controllers
+namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
 {
     [Authorize(Roles = "Ogretmen")]
     public class HomeController : BaseController
@@ -40,13 +40,13 @@ namespace NotOtomasyonu.Areas.Ogretmen.Controllers
         public ActionResult DersListele()
         {
             string id = User.Identity.Name;
-            OgretmenModel aUser = dbcontext.Ogretmenler.FirstOrDefault(i => i.OgretmenId == User.Identity.Name);
+            OgretmenModel aUser = dbcontext.Ogretmenler.Find(User.Identity.Name);
             return View(aUser);
         }
         public ActionResult OgrenciNotlariniGuncelle(string notId, string dersId)
         {
-            Not not = dbcontext.Notlar.FirstOrDefault(i => i.NotId == notId);
-            Ders ders = dbcontext.Dersler.FirstOrDefault(i => i.DersId == dersId);
+            Not not = dbcontext.Notlar.Find(notId);
+            Ders ders = dbcontext.Dersler.Find(dersId);
 
             if (ders.Notlar.Count(i => i.NotId == notId) == 0)
             {
@@ -59,6 +59,7 @@ namespace NotOtomasyonu.Areas.Ogretmen.Controllers
         public ActionResult OgrenciNotlariniGuncelle(Not model)
         {
             var notupdate = dbcontext.Notlar.FirstOrDefault(i => i.NotId == model.NotId);
+            Ders ders = dbcontext.Dersler.Find(notupdate.DersId);
             if (notupdate != null)
             {
                 notupdate.Sinav1 = model.Sinav1;
@@ -69,7 +70,29 @@ namespace NotOtomasyonu.Areas.Ogretmen.Controllers
                 notupdate.Sozlu3 = model.Sozlu3;
                 dbcontext.SaveChanges();
             }
-            return RedirectToAction("OgrenciNotlariniGoruntule", new { dersId = notupdate.Ders.DersId });
+            return RedirectToAction("OgrenciNotlariniGoruntule", new { dersId = notupdate.DersId });
+        }
+
+        public ActionResult DersOlustur()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DersOlustur(Ders model)
+        {
+            if (ModelState.IsValid)
+            {
+                OgretmenModel ogretmen = dbcontext.Ogretmenler.Find(User.Identity.Name);
+                Ders ders = new Ders();
+                ders.DersId = model.DersId;
+                ders.DersAdi = model.DersAdi;
+                ders.Ogretmen = ogretmen;
+                ders.OgretmenId = ogretmen.OgretmenId;
+                dbcontext.Dersler.Add(ders);
+                dbcontext.SaveChanges();
+            }
+            return View(model);
         }
     }
 }

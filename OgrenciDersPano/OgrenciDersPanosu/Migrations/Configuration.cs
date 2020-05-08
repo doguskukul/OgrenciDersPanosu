@@ -1,5 +1,6 @@
 ﻿namespace OgrenciDersPanosu.Migrations
 {
+    using OgrenciDersPanosu.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -16,7 +17,6 @@
 
         protected override void Seed(OgrenciDersPanosu.identity.IdentityDataContext context)
         {
-            
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method

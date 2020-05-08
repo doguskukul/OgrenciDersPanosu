@@ -15,13 +15,15 @@
                     Mevcut Dersler
                 </button>
                 <div class="dropdown-menu btn-custom4" aria-labelledby="dropdownMenuButton">
-                    @if (Model.Dersler.Count() == 0)
+                    @if (Model.Dersler == null)
                     {
                     <div>Mevcut ders yok</div>
                     }
-                    @foreach (OgrenciDersPanosu.Models.Ders aDers in Model.Dersler)
+                    else { 
+                    foreach (OgrenciDersPanosu.Models.Ders aDers in Model.Dersler)
                     {
                         @Html.ActionLink(aDers.DersAdi, "OgrenciNotlariniGoruntule", new { dersId = aDers.DersId }, new { @class = "btn btn-custom4 btn-sm" })<br />
+                        }
                     }
                 </div>
             </div>

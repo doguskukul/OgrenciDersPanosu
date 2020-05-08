@@ -5,7 +5,7 @@
 }
 <link href="~/Content/DersSecimi.css" rel="stylesheet" type="text/css" />
 @{
-    List<Ders> mevcutOlmayanDersler = ViewBag.mevcutOlmayan;
+    List<Ders> mevcut = ViewBag.mevcut;
 }
 <div class="tabloDiv">
     <table class="table table-striped">
@@ -20,7 +20,7 @@
                 <td>@aDers.DersId</td>
                 <td>@aDers.DersAdi</td>
                 <td>
-                    @if (mevcutOlmayanDersler.Find(i => i.DersId == aDers.DersId) != null)
+                    @if (mevcut.Find(i => i.DersId == aDers.DersId) == null)
                     {
                         @Html.ActionLink("Ekle", "SecilenDers", new { dersId = aDers.DersId }, new { @class = "btn btn-custom5 btn-sm" })
                         <button class="btn btn-custom6 btn-sm" disabled>Sil</button>
