@@ -1,6 +1,7 @@
 ﻿@model OgrenciDersPanosu.Models.LoginOgrenci
 @{
     ViewBag.Title = "Login";
+    //Öğrenci giriş sayfasıdır
 }
 <link href="~/Content/Login.css" rel="stylesheet" type="text/css" />
 <div class="form">
@@ -9,6 +10,7 @@
     <hr />
     @using (Html.BeginForm())
     {
+        //Öğrenci için giriş formu post edilmesini sağlar
         @Html.AntiForgeryToken()
         <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
 

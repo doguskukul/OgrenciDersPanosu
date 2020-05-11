@@ -17,6 +17,7 @@
             <th>NotOrtalaması</th>
         </tr>
         @if(Model.Notlar != null) {
+            //Ogrenci tarafindan secilen derse iliskin notlarin gorunmesi saglanir
             foreach (Not aNot in Model.Notlar)
             {
                 OgrenciDersPanosu.identity.IdentityDataContext context = new OgrenciDersPanosu.identity.IdentityDataContext();

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
 {
@@ -20,12 +21,15 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
             return View();
         }
 
+        //Sistemden çıkış yapılmasını sağlar
         public ActionResult Logout()
         {
             var authManager = HttpContext.GetOwinContext().Authentication;
             authManager.SignOut();
             return RedirectToAction("index", "Home", new { Area = "" });
         }
+
+        //Giriş yapan öğrenci bilgilerinin görüntülenmesini sağlar
         public ActionResult OgrenciBilgisi()
         {
             string id = User.Identity.Name;
@@ -38,6 +42,7 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
             return View(ogrenci);
         }
 
+        //Öğrencinin kayıt olduğu derslerindeki ders notlarının görüntülenmesini sağlar
         public ActionResult OgrenciNotuListele()
         {
             var OgrenciNo = User.Identity.Name;
@@ -45,6 +50,7 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
             return View(ogrenci);
         }
 
+        //Ders ekle/sil işlemlerinin yapılmasını sağlar
         public ActionResult DersSecimi()
         {
             List<Ders> MevcutOlmayanDersler = new List<Ders>();
@@ -59,6 +65,8 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
             ViewBag.mevcut = mevcutDersler.ToList() ;
             return View(dersler);
         }
+
+        //Seçilen dersi öğrencinin mevcut derslerine ekler
         public ActionResult SecilenDers(string dersId)
         {
             string ogrId = User.Identity.Name;
@@ -75,16 +83,27 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
             dbcontext.SaveChanges();
             return RedirectToAction("DersSecimi");
         }
+
+        //Secilen dersi öğrencinin mevcut derslerinden çıkarır
         public ActionResult SilinecekDers(string dersId)
         {
             string ogrId = User.Identity.Name;
             Ders ders = dbcontext.Dersler.Find(dersId);
-            foreach (var not in dbcontext.Notlar.Where(o => o.DersId == dersId && o.OgrenciId == ogrId))
-            dbcontext.Notlar.Remove(not);
+
+            DialogResult result = MessageBox.Show("Silme işlemini gerçekleştirmek istiyor musunuz?", "Dikkat", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                foreach (var not in dbcontext.Notlar.Where(o => o.DersId == dersId && o.OgrenciId == ogrId))
+                    dbcontext.Notlar.Remove(not);
+                MessageBox.Show("İşlem Başırıyla Gerçekleşmiştir");
+
+            }
             dbcontext.SaveChanges();
             return RedirectToAction("DersSecimi");
         }
 
+        //Öğrencinin kayıt olduğu derslerin dersliklerine girişi sağlar, ve gönderiler listelenir. Aynı zamanda öğrenci yeni gönderi gönderebilir
         public ActionResult Derslik(string dersId)
         {
             ViewBag.dersId = dersId;
@@ -125,11 +144,17 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
             return View(model);
         }
 
+        //Giriş yapılan derslikte kayıtlı olan öğrencileri gösterir
         public ActionResult Derslik_Uyeleri(string dersId)
         {
-            Ders ders = dbcontext.Dersler.Find(dersId);
+            var notlar = dbcontext.Notlar.Where(i => i.DersId == dersId).ToList();
+            List<OgrenciModel> ogrencilist = new List<OgrenciModel>();
+            foreach (Not not in notlar)
+            {
+                ogrencilist.Add(dbcontext.Ogrenciler.Find(not.OgrenciId));
+            }
             ViewBag.dersId = dersId;
-            return View(ders);
+            return View(ogrencilist);
         }
     }
 }

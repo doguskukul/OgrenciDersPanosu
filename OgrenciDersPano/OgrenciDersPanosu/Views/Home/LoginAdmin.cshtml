@@ -1,5 +1,6 @@
 ﻿@model OgrenciDersPanosu.Models.LoginAdmin
 @{
+    //Admin kayıt sayfasıdır.
     ViewBag.Title = "Login";
 }
 <link href="~/Content/Login.css" rel="stylesheet" type="text/css" />
@@ -10,6 +11,7 @@
     <hr />
     @using (Html.BeginForm())
     {
+        //Admin için giriş formu post edilmesini sağlar
         @Html.AntiForgeryToken()
         <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
 

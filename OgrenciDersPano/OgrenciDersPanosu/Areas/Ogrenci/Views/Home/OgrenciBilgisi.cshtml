@@ -2,6 +2,7 @@
 @using OgrenciDersPanosu.Models
 @{
     ViewBag.Title = "OgrenciBilgisi";
+    //Ogrencinin kendi bilgilerinin gorutulendigi sayfa
 }
 <link href="~/Content/Mudur.css" rel="stylesheet" type="text/css" />
 <div class="card">
@@ -22,6 +23,7 @@
             }
             else
             {
+                //Öğrencinin kayıt olduğu derslerin dersliklerinin listelenmesi sağlanır
                 foreach (OgrenciDersPanosu.Models.Not aNot in Model.Notlar)
                 {
                     OgrenciDersPanosu.identity.IdentityDataContext context = new OgrenciDersPanosu.identity.IdentityDataContext();

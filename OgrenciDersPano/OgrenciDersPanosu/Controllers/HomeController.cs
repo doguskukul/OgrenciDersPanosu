@@ -7,12 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows.Forms;
 
 namespace OgrenciDersPanosu.Controllers
 {
     public class HomeController : BaseController
     {
         // GET: Home
+
+        //Kullanıcı kaydı kriterlerinin belirlenmesini sağlar
         public HomeController()
         {
             userManager.PasswordValidator = new PasswordValidator()
@@ -30,8 +33,10 @@ namespace OgrenciDersPanosu.Controllers
         }
 
         // GET: Home
+        //Admin, öğretmen ve öğrenci rollerinin giriş yapabileceği giriş sayfasıdır. Her rol için farklı giriş butonu bulunur.
         public ActionResult Index()
         {
+            //Sisteme giriş yapan kullanıcının kendi sayfasına yönlendirilmesini sağlar
             if (User.IsInRole("admin"))
             {
                 return RedirectToAction("Index", "Home", new { Area = "Admin" });
@@ -49,6 +54,7 @@ namespace OgrenciDersPanosu.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        //Admin girişidir.
         public ActionResult LoginAdmin(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -67,6 +73,7 @@ namespace OgrenciDersPanosu.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Yapılan giriş kullanıcı listesinde bulunuyorsa ve rolü adminse giriş geçerlidir. Aksi taktirde hatalı giriş uyarısı gözükecektir.
                 var user = userManager.Find(model.AdminId, model.Sifre);
                 if (user != null)
                 {
@@ -102,6 +109,7 @@ namespace OgrenciDersPanosu.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        //Öğrenci girişidir.
         public ActionResult LoginOgrenci(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -120,6 +128,7 @@ namespace OgrenciDersPanosu.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Yapılan giriş kullanıcı listesinde bulunuyorsa ve rolü öğrenciyse giriş geçerlidir. Aksi taktirde hatalı giriş uyarısı gözükecektir.
                 var user = userManager.Find(model.OgrenciNo, model.Sifre);
                 if (user != null)
                 {
@@ -156,6 +165,7 @@ namespace OgrenciDersPanosu.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        //Öğretmen girişi
         public ActionResult LoginOgretmen(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -174,6 +184,7 @@ namespace OgrenciDersPanosu.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Yapılan giriş kullanıcı listesinde bulunuyorsa ve rolü öğretmense giriş geçerlidir. Aksi taktirde hatalı giriş uyarısı gözükecektir.
                 var user = userManager.Find(model.OgretmenId, model.Sifre);
                 if (user != null)
                 {
@@ -213,10 +224,12 @@ namespace OgrenciDersPanosu.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //Öğrenci yeni kayıt sayfasıdır.
         public ActionResult RegisterOgrenci(RegisterOgrenci model)
         {
             if (ModelState.IsValid)
             {
+                //Kayıt bilgileri geçerliyse ve öğrenci sistemde kayıtlı değilse kayıt başarıyla gerçekleşir, aksi taktirde kayıt gerçekleşmez ve hata mesajı gözükür.
                 var user = new ApplicationUser();
                 user.UserName = model.OgrenciNo;
                 user.Name = model.OgrenciIsim;
@@ -225,6 +238,7 @@ namespace OgrenciDersPanosu.Controllers
 
                 if (result.Succeeded)
                 {
+                    //Öğrenci başarılı bir şekilde sisteme kaydedildiyse, diğer bilgilerine erişebilmek için öğrenciler tablosuna kaydı eklenir.
                     OgrenciModel aOgrenci = new OgrenciModel();
                     aOgrenci.Ad = model.OgrenciIsim;
                     aOgrenci.Soyad = model.OgrenciSoyisim;
@@ -233,6 +247,7 @@ namespace OgrenciDersPanosu.Controllers
                     dbcontext.SaveChanges();
                     
                     userManager.AddToRole(user.Id, "Ogrenci");
+                    MessageBox.Show("Kaydınız başarılı bir şekilde gerçekleşmiştir","Bilgilendirme");
                     return RedirectToAction("Index", new { id = User.Identity.Name });
                 }
                 else
@@ -255,6 +270,7 @@ namespace OgrenciDersPanosu.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Kayıt bilgileri geçerliyse ve öğretmen sistemde kayıtlı değilse kayıt başarıyla gerçekleşir, aksi taktirde kayıt gerçekleşmez ve hata mesajı gözükür.
                 var user = new ApplicationUser();
                 user.UserName = model.OgretmenId;
                 user.Name = model.OgretmenIsim;
@@ -263,6 +279,7 @@ namespace OgrenciDersPanosu.Controllers
 
                 if (result.Succeeded)
                 {
+                    //Öğretmen başarılı bir şekilde sisteme kaydedildiyse, diğer bilgilerine erişebilmek için öğretmenler tablosuna kaydı eklenir.
                     OgretmenModel aOgretmen = new OgretmenModel();
                     aOgretmen.Ad = model.OgretmenIsim;
                     aOgretmen.Soyad = model.OgretmenSoyisim;
@@ -270,6 +287,7 @@ namespace OgrenciDersPanosu.Controllers
                     dbcontext.Ogretmenler.Add(aOgretmen);
                     dbcontext.SaveChanges();
                     userManager.AddToRole(user.Id, "Ogretmen");
+                    MessageBox.Show("Kaydınız başarılı bir şekilde gerçekleşmiştir", "Bilgilendirme");
                     return RedirectToAction("Index", new { id = User.Identity.Name });
                 }
                 else
@@ -282,6 +300,7 @@ namespace OgrenciDersPanosu.Controllers
             }
             return View(model);
         }
+        //Yeni kayıt işleminin hangi rol için yapılacağını belirler.
         public ActionResult SelectRoleForRegister()
         {
             return View();

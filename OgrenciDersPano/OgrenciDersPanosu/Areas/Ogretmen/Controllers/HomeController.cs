@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
 {
@@ -16,10 +17,14 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
     public class HomeController : BaseController
     {
         // GET: Ogretmen/Home
+
+        //Giriş yapan öğretmen bilgilerinin görüntülenmesini sağlar
         public ActionResult Index()
         {
             return View();
         }
+
+        //Sistemden çıkış yapılmasını sağlar
         public ActionResult Logout()
         {
             var authManager = HttpContext.GetOwinContext().Authentication;
@@ -27,6 +32,7 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
             return RedirectToAction("index", "Home", new { Area = "" });
         }
 
+        //Seçilen derste kayıtlı öğrencileri ve öğrencilerin notlarını görüntülemeyi sağlar
         public ActionResult OgrenciNotlariniGoruntule(string dersId)
         {
             var notlar = (from not in dbcontext.Notlar where not.Ders.DersId == dersId select not).ToList();
@@ -38,12 +44,16 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
 
             return View(notlar);
         }
+
+        //Öğretmenin oluşturduğu dersleri listeler
         public ActionResult DersListele()
         {
             string id = User.Identity.Name;
             OgretmenModel aUser = dbcontext.Ogretmenler.Find(User.Identity.Name);
             return View(aUser);
         }
+
+        //Seçilen öğreninin notlarının düzenlenmesini sağlar
         public ActionResult OgrenciNotlariniGuncelle(string notId, string dersId)
         {
             Not not = dbcontext.Notlar.Find(notId);
@@ -53,9 +63,9 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
             {
                 return RedirectToAction("DersListele", "Home");
             }
-
             return View(not);
         }
+
         [HttpPost]
         public ActionResult OgrenciNotlariniGuncelle(Not model)
         {
@@ -71,9 +81,11 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
                 notupdate.Sozlu3 = model.Sozlu3;
                 dbcontext.SaveChanges();
             }
+            MessageBox.Show("Notlar Başarılı Bir Şekilde Güncellenmiştir...", "Bilgilendirme");
             return RedirectToAction("OgrenciNotlariniGoruntule", new { dersId = notupdate.DersId });
         }
 
+        //Yeni ders oluşturulmasını sağlar
         public ActionResult DersOlustur()
         {
             return View();
@@ -93,9 +105,11 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
                 dbcontext.Dersler.Add(ders);
                 dbcontext.SaveChanges();
             }
+            MessageBox.Show("Ders başarılı bir şekilde oluşturulmuştur", "Bilgilendirme");
             return View(model);
         }
 
+        //Seçilen dersin derslik sayfasına gidilmesini sağlar, burada öğrencilerle bilgi paylaşımı yapılabilir
         public ActionResult Derslik(string dersId)
         {
             ViewBag.dersId = dersId;
@@ -136,11 +150,17 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
             return View(model);
         }
 
+        //İlgili derse kayıtlı öğrencilerin görüntülenmesini sağlar
         public ActionResult Derslik_Uyeleri(string dersId)
         {
-            Ders ders = dbcontext.Dersler.Find(dersId);
+            var notlar = dbcontext.Notlar.Where(i => i.DersId == dersId).ToList();
+            List<OgrenciModel> ogrencilist = new List<OgrenciModel>();
+            foreach (Not not in notlar)
+            {
+                ogrencilist.Add(dbcontext.Ogrenciler.Find(not.OgrenciId));
+            }
             ViewBag.dersId = dersId;
-            return View(ders);
+            return View(ogrencilist);
         }
     }
 }

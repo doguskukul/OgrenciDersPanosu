@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows.Forms;
 using static OgrenciDersPanosu.Areas.Admin.Models.RoleModel;
 
 namespace OgrenciDersPanosu.Areas.Admin.Controllers
@@ -17,12 +18,15 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
     public class HomeController : BaseController
     {
         // GET: Admin/Home
+
+        //Giriş yapan admin bilgilerini listeler
         public ActionResult Index()
         {
             var id = HttpContext.User.Identity.Name;
             var user = userManager.FindByName(id);
             return View(user);
         }
+        //Oluşturulan rolleri listeler
         public ActionResult Roles()
         {
             return View(roleManager.Roles);
@@ -35,6 +39,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        //Rol oluşturmayı sağlar
         public ActionResult Create(string name)
         {
             if (ModelState.IsValid)
@@ -42,6 +47,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
                 var result = roleManager.Create(new IdentityRole(name));
                 if (result.Succeeded)
                 {
+                    MessageBox.Show("Kaydınız başarılı bir şekilde gerçekleşmiştir", "Bilgilendirme");
                     return RedirectToAction("Roles");
                 }
                 else
@@ -56,6 +62,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        //Rol silmeyi sağlar
         public ActionResult Delete(string id)
         {
             var role = roleManager.FindById(id);
@@ -78,6 +85,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        //Roller kullanıcı ekleyebilmeyi ve rollerden kullanıcı çıkarabilmeyi sağlar
         public ActionResult Edit(string id)
         {
             var role = roleManager.FindById(id);
@@ -96,7 +104,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
                 NonMembers = nonMembers
             });
         }
-
+        
         [HttpPost]
         public ActionResult Edit(RoleUpdateModel model)
         {
@@ -124,6 +132,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
             return View("Error", new string[] { "Aranılan rol yok." });
         }
 
+        //Kullanıcı listelemeyi sağlar
         public ActionResult UserList()
         {
             var roles = new List<ApplicationRole>();
@@ -142,6 +151,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
             return View();
         }
 
+        //Yeni admin oluşturmayı sağlar
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisterAdmin(RegisterAdmin model)
@@ -157,6 +167,7 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
                 if (result.Succeeded)
                 {
                     userManager.AddToRole(user.Id, "Admin");
+                    MessageBox.Show("Kaydınız başarılı bir şekilde gerçekleşmiştir", "Bilgilendirme");
                     return RedirectToAction("RegisterAdmin", new { id = User.Identity.Name });
                 }
                 else
@@ -169,6 +180,8 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
             }
             return View(model);
         }
+
+        //Sistemden çıkış yapılmasını sağlar
         public ActionResult Logout()
         {
             var authManager = HttpContext.GetOwinContext().Authentication;
@@ -176,25 +189,6 @@ namespace OgrenciDersPanosu.Areas.Admin.Controllers
             return RedirectToAction("index", "Home", new { Area = "" });
 
 
-        }
-
-
-
-        public ActionResult SelectRoleForRegister()
-        {
-            return View();
-        }
-
-        public ActionResult getUserList()
-        {
-            var roles = new List<ApplicationRole>();
-
-            var users = userManager.Users.ToList().Select(i => new UserWithRole
-            {
-                user = i,
-                Roles = userManager.GetRoles(i.Id)
-            });
-            return View(users);
         }
     }
 }
