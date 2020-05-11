@@ -97,17 +97,13 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
 
         public ActionResult Derslik(string dersId)
         {
-            Ders ders = dbcontext.Dersler.Find(dersId);
-            var ogretmen = dbcontext.Ogretmenler.FirstOrDefault(i => i.OgretmenId == User.Identity.Name);
-            if (ogretmen.Dersler.Count(i => i.DersId == dersId) == 0)
-            {
-                return RedirectToAction("DersListele", "Home");
-            }
-            return View(ders);
+            ViewBag.dersId = dersId;
+            return View();
         }
 
-        [ValidateInput(false)]
-        public ActionResult Gonderi_Yap(string dersId, string text)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Derslik(Derslik_Gonderi model, string dersId)
         {
             if (ModelState.IsValid)
             {
@@ -123,16 +119,20 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
                     id = 0;
                 }
                 gonderi.GonderiId = id.ToString();
-                gonderi.Gonderi = text;
+                gonderi.Gonderi = model.Gonderi;
                 gonderi.zaman = DateTime.Now;
+                gonderi.dersId = dersId;
+                
                 OgretmenModel ogretmen = dbcontext.Ogretmenler.Find(User.Identity.Name);
                 gonderi.gonderenIsmi = ogretmen.Ad + " " + ogretmen.Soyad;
-                Ders ders = dbcontext.Dersler.Find(dersId);
+                Ders ders = dbcontext.Dersler.Find(model.dersId);
+                gonderi.Ders = ders;
                 ders.Gonderiler.Add(gonderi);
                 dbcontext.Gonderiler.Add(gonderi);
                 dbcontext.SaveChanges();
             }
-            return RedirectToAction("Derslik", "Home", new { dersId = dersId });
+            ViewBag.dersId = dersId;
+            return View(model);
         }
     }
 }

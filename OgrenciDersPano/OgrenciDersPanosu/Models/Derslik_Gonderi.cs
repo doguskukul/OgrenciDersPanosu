@@ -15,5 +15,8 @@ namespace OgrenciDersPanosu.Models
         public string UstGonderiID { get; set; }
         public string gonderenIsmi { get; set; }
         public DateTime zaman { get; set; }
+
+        public string dersId { get; set; }
+        public Ders Ders { get; set; }
     }
 }

@@ -85,23 +85,19 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
 
         public ActionResult Derslik(string dersId)
         {
-            Ders ders = dbcontext.Dersler.Find(dersId);
-            var ogrenci = dbcontext.Ogrenciler.FirstOrDefault(i => i.OgrenciId == User.Identity.Name);
-            if (ogrenci.Notlar.Count(i => i.DersId == dersId) == 0)
-            {
-                return RedirectToAction("OgrenciBilgisi", "Home");
-            }
-            return View(ders);
+            ViewBag.dersId = dersId;
+            return View();
         }
 
-        [ValidateInput(false)]
-        public ActionResult Gonderi_Yap(string dersId, string text)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Derslik(Derslik_Gonderi model, string dersId)
         {
             if (ModelState.IsValid)
             {
                 Derslik_Gonderi gonderi = new Derslik_Gonderi();
                 int id;
-                if(dbcontext.Gonderiler.Count() != 0)
+                if (dbcontext.Gonderiler.Count() != 0)
                 {
                     var son_gonderi = dbcontext.Gonderiler.OrderByDescending(w => w.zaman).First();  //zamana göre son gönderiyi belirleme
                     id = int.Parse(son_gonderi.GonderiId) + 1;                               //id son gönderinin id sinin 1 fazlası olmalı
@@ -111,16 +107,20 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
                     id = 0;
                 }
                 gonderi.GonderiId = id.ToString();
-                gonderi.Gonderi = text;
+                gonderi.Gonderi = model.Gonderi;
                 gonderi.zaman = DateTime.Now;
+                gonderi.dersId = dersId;
+
                 OgrenciModel ogrenci = dbcontext.Ogrenciler.Find(User.Identity.Name);
                 gonderi.gonderenIsmi = ogrenci.Ad + " " + ogrenci.Soyad;
-                Ders ders = dbcontext.Dersler.Find(dersId);
+                Ders ders = dbcontext.Dersler.Find(model.dersId);
+                gonderi.Ders = ders;
                 ders.Gonderiler.Add(gonderi);
                 dbcontext.Gonderiler.Add(gonderi);
                 dbcontext.SaveChanges();
             }
-            return RedirectToAction("Derslik", "Home", new { dersId = dersId});
+            ViewBag.dersId = dersId;
+            return View(model);
         }
     }
 }
