@@ -53,13 +53,13 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
         //Ders ekle/sil işlemlerinin yapılmasını sağlar
         public ActionResult DersSecimi()
         {
-            List<Ders> MevcutOlmayanDersler = new List<Ders>();
+           List<Ders> MevcutOlmayanDersler = new List<Ders>();
             var dersler = dbcontext.Dersler.ToList();
             OgrenciModel ogrenci = dbcontext.Ogrenciler.Find(User.Identity.Name);
             var notlar = dbcontext.Notlar.Where(i => i.Ogrenci.OgrenciId == ogrenci.OgrenciId);
-            IQueryable<Ders> mevcutDersler = Enumerable.Empty<Ders>().AsQueryable();
+            List<Ders> mevcutDersler = new List<Ders>();
             foreach (Not not in notlar) {
-                mevcutDersler = dbcontext.Dersler.Where(i => i.DersId == not.DersId);
+                mevcutDersler.Add(dbcontext.Dersler.Find(not.DersId));
             }
             
             ViewBag.mevcut = mevcutDersler.ToList() ;
