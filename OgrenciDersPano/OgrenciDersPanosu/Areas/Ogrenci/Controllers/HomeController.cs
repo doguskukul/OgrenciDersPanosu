@@ -82,5 +82,45 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
             dbcontext.SaveChanges();
             return RedirectToAction("DersSecimi");
         }
+
+        public ActionResult Derslik(string dersId)
+        {
+            Ders ders = dbcontext.Dersler.Find(dersId);
+            var ogrenci = dbcontext.Ogrenciler.FirstOrDefault(i => i.OgrenciId == User.Identity.Name);
+            if (ogrenci.Notlar.Count(i => i.DersId == dersId) == 0)
+            {
+                return RedirectToAction("OgrenciBilgisi", "Home");
+            }
+            return View(ders);
+        }
+
+        [ValidateInput(false)]
+        public ActionResult Gonderi_Yap(string dersId, string text)
+        {
+            if (ModelState.IsValid)
+            {
+                Derslik_Gonderi gonderi = new Derslik_Gonderi();
+                int id;
+                if(dbcontext.Gonderiler.Count() != 0)
+                {
+                    var son_gonderi = dbcontext.Gonderiler.OrderByDescending(w => w.zaman).First();  //zamana göre son gönderiyi belirleme
+                    id = int.Parse(son_gonderi.GonderiId) + 1;                               //id son gönderinin id sinin 1 fazlası olmalı
+                }
+                else
+                {
+                    id = 0;
+                }
+                gonderi.GonderiId = id.ToString();
+                gonderi.Gonderi = text;
+                gonderi.zaman = DateTime.Now;
+                OgrenciModel ogrenci = dbcontext.Ogrenciler.Find(User.Identity.Name);
+                gonderi.gonderenIsmi = ogrenci.Ad + " " + ogrenci.Soyad;
+                Ders ders = dbcontext.Dersler.Find(dersId);
+                ders.Gonderiler.Add(gonderi);
+                dbcontext.Gonderiler.Add(gonderi);
+                dbcontext.SaveChanges();
+            }
+            return RedirectToAction("Derslik", "Home", new { dersId = dersId});
+        }
     }
 }

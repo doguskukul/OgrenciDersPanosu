@@ -140,6 +140,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DersAta.css" />
+    <Content Include="Content\Derslik.css" />
     <Content Include="Content\DersSecimi.css" />
     <Content Include="Content\GetUserList.css" />
     <Content Include="Content\home.css" />
@@ -147,6 +148,7 @@
     <Content Include="Content\Images\boss.png" />
     <Content Include="Content\Images\classmates.png" />
     <Content Include="Content\Images\teacher.png" />
+    <Content Include="Content\Images\upload.jpg" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\Mudur.css" />
     <Content Include="Content\OgrenciNotlariniGoruntule.css" />
@@ -205,11 +207,13 @@
     <Content Include="Areas\Ogretmen\Views\Home\OgrenciNotlariniGuncelle.cshtml" />
     <Content Include="Areas\Ogretmen\Views\Home\Index.cshtml" />
     <Content Include="Areas\Ogretmen\Views\Home\DersOlustur.cshtml" />
-    <None Include="Scripts\jquery-3.5.0.intellisense.js" />
-    <Content Include="Scripts\jquery-3.5.0.js" />
-    <Content Include="Scripts\jquery-3.5.0.min.js" />
-    <Content Include="Scripts\jquery-3.5.0.slim.js" />
-    <Content Include="Scripts\jquery-3.5.0.slim.min.js" />
+    <Content Include="Areas\Ogrenci\Views\Home\Derslik.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\Derslik.cshtml" />
+    <None Include="Scripts\jquery-3.5.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.5.1.js" />
+    <Content Include="Scripts\jquery-3.5.1.min.js" />
+    <Content Include="Scripts\jquery-3.5.1.slim.js" />
+    <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
@@ -305,6 +309,7 @@
     <Compile Include="identity\IdentityDataContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DbExtensions.cs" />
+    <Compile Include="Models\Derslik_Gonderi.cs" />
     <Compile Include="Models\OgretmenModel.cs" />
     <Compile Include="Models\OgrenciModel.cs" />
     <Compile Include="Models\Not.cs" />
@@ -324,8 +329,6 @@
     <Content Include="Views\Home\RegisterOgrenci.cshtml" />
     <Content Include="Views\Home\LoginOgrenci.cshtml" />
     <Content Include="Views\Home\LoginOgretmen.cshtml" />
-    <Content Include="Scripts\jquery-3.5.0.slim.min.map" />
-    <Content Include="Scripts\jquery-3.5.0.min.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -336,6 +339,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Scripts\jquery-3.5.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.5.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

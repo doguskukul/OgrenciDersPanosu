@@ -20,6 +20,8 @@ namespace OgrenciDersPanosu.Models
         public OgretmenModel Ogretmen { get; set; }
         public string OgretmenId { get; set; }
         public virtual ICollection<Not> Notlar {get;set;}
-       
+
+        public virtual ICollection<Derslik_Gonderi> Gonderiler { get; set; }
+
     }
 }

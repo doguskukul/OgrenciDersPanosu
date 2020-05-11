@@ -1,0 +1,37 @@
+﻿@model OgrenciDersPanosu.Models.Ders
+@{
+    ViewBag.Title = "Derslik";
+}
+
+<link href="~/Content/Derslik.css" rel="stylesheet" type="text/css" />
+
+
+
+<div class="post">
+    <div id="column-1" class="post"><h2>@Model.DersAdi</h2><br><br><br><br><br><br><hr></div>
+    <div id="postboxpos" class="post">
+        <textarea placeholder="Güncelleme Yap" id="postbox" type="text"></textarea>
+    </div>
+    <div id="uploadpos" class="post">
+        <a href="C:\Users\"><img src="~/Content/Images/upload.jpg" /></a>
+    </div>
+    <div id="upload_text" class="post">Yükle</div>
+</div>
+
+<div class="post">
+    <div id="postpos" class="post">
+        @Html.ActionLink("Gönder", "Gonderi_Yap", new { dersId = Model.DersId, text = "aaa" }, new { @class = "btn btn-custom5 btn-sm" })
+    </div>
+</div>
+
+
+@if (Model.Gonderiler.Count() != 0)
+{
+    foreach (var gonderi in Model.Gonderiler)
+    {
+        <div class="post1">
+            <div id="kullaniciadi">@gonderi.gonderenIsmi</div>
+            <div id="post2text" class="post1">@gonderi.Gonderi</div>
+        </div>
+    }
+}

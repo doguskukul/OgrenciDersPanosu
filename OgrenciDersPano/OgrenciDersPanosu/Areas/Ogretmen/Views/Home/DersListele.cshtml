@@ -17,12 +17,31 @@
                 <div class="dropdown-menu btn-custom4" aria-labelledby="dropdownMenuButton">
                     @if (Model.Dersler == null)
                     {
-                    <div>Mevcut ders yok</div>
+                        <div>Mevcut ders yok</div>
                     }
-                    else { 
-                    foreach (OgrenciDersPanosu.Models.Ders aDers in Model.Dersler)
+                    else
                     {
-                        @Html.ActionLink(aDers.DersAdi, "OgrenciNotlariniGoruntule", new { dersId = aDers.DersId }, new { @class = "btn btn-custom4 btn-sm" })<br />
+                        foreach (OgrenciDersPanosu.Models.Ders aDers in Model.Dersler)
+                        {
+                            @Html.ActionLink(aDers.DersAdi, "OgrenciNotlariniGoruntule", new { dersId = aDers.DersId }, new { @class = "btn btn-custom4 btn-sm" })<br />
+                        }
+                    }
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-custom4 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Derslikler
+                </button>
+                <div class="dropdown-menu btn-custom4" aria-labelledby="dropdownMenuButton">
+                    @if (Model.Dersler == null)
+                    {
+                        <div>Mevcut ders yok</div>
+                    }
+                    else
+                    {
+                        foreach (OgrenciDersPanosu.Models.Ders aDers in Model.Dersler)
+                        {
+                            @Html.ActionLink(aDers.DersAdi, "Derslik", new { dersId = aDers.DersId }, new { @class = "btn btn-custom4 btn-sm" })<br />
                         }
                     }
                 </div>
