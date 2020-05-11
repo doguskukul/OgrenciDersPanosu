@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
 {
@@ -133,6 +134,13 @@ namespace OgrenciDersPanosu.Areas.Ogretmen.Controllers
             }
             ViewBag.dersId = dersId;
             return View(model);
+        }
+
+        public ActionResult Derslik_Uyeleri(string dersId)
+        {
+            Ders ders = dbcontext.Dersler.Find(dersId);
+            ViewBag.dersId = dersId;
+            return View(ders);
         }
     }
 }

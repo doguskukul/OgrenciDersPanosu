@@ -209,6 +209,8 @@
     <Content Include="Areas\Ogretmen\Views\Home\DersOlustur.cshtml" />
     <Content Include="Areas\Ogrenci\Views\Home\Derslik.cshtml" />
     <Content Include="Areas\Ogretmen\Views\Home\Derslik.cshtml" />
+    <Content Include="Areas\Ogretmen\Views\Home\Derslik_Uyeleri.cshtml" />
+    <Content Include="Areas\Ogrenci\Views\Home\Derslik_Uyeleri.cshtml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />

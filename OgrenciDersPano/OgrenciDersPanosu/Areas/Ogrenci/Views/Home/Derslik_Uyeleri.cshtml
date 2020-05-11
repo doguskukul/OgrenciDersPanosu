@@ -1,0 +1,37 @@
+﻿@model OgrenciDersPanosu.Models.Ders
+@{
+    ViewBag.Title = "Derslik_Uyeleri";
+}
+
+<link href="~/Content/OgrenciNotlariniGoruntule.css" rel="stylesheet" type="text/css" />
+@{
+    <div class="tabloDiv">
+        <table class="table table-striped">
+            @Html.AntiForgeryToken()
+            <tr>
+                <th>Üye No</th>
+                <th>Üye Adı</th>
+                <th>Üye Soyadı</th>
+            </tr>
+            @{
+                OgrenciDersPanosu.identity.IdentityDataContext context = new OgrenciDersPanosu.identity.IdentityDataContext();
+                OgrenciDersPanosu.Models.Ders ders = context.Dersler.Find(ViewBag.dersId);
+                var ogrenciler = new List<OgrenciDersPanosu.Models.OgrenciModel>();
+                /*var ogrencilist = dbcontext.Ogrenciler.Where(ViewBag.dersId = ders.DersId);
+                if (ders.Ogrenciler != null)
+                {
+                    ogrenciler = ders.Ogrenciler.ToList();
+                }
+                foreach (var ogrenci in ogrenciler)
+                {
+                    <tr>
+                        <th>@ogrenci.OgrenciId</th>
+                        <th>@ogrenci.Ad</th>
+                        <th>@ogrenci.Soyad</th>
+                    </tr>
+                }*/
+            }
+        </table>
+    </div>
+}
+

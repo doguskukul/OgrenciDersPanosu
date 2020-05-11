@@ -1,4 +1,6 @@
-﻿using OgrenciDersPanosu.Controllers;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using OgrenciDersPanosu.Controllers;
 using OgrenciDersPanosu.identity;
 using OgrenciDersPanosu.Models;
 using System;
@@ -121,6 +123,13 @@ namespace OgrenciDersPanosu.Areas.Ogrenci.Controllers
             }
             ViewBag.dersId = dersId;
             return View(model);
+        }
+
+        public ActionResult Derslik_Uyeleri(string dersId)
+        {
+            Ders ders = dbcontext.Dersler.Find(dersId);
+            ViewBag.dersId = dersId;
+            return View(ders);
         }
     }
 }
